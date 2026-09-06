@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tandra's — Homemade food and canteen services for students. Fresh, hygienic, and affordable meals served with love. Explore our menu today!">
+  <meta name="keywords" content="Tandra's, canteen, food service, homemade food, student meals, Indian food">
+  <meta property="og:title" content="Tandra's — Homemade Goodness, Served with Love">
+  <meta property="og:description" content="Fresh, hygienic, and affordable homemade meals for students. Explore our delicious menu!">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#E8751A">
+  <title>Tandra's — Homemade Goodness, Served with Love</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍛</text></svg>">
+</head>
+<body>
+
+  <!-- ============================================
+       NAVIGATION
+       ============================================ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#hero" class="nav-logo" id="nav-logo">Tandra's<span>.</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-overlay" id="mobile-overlay"></div>
+
+  <!-- ============================================
+       HERO SECTION
+       ============================================ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img src="images/hero-bg.jpg" alt="A beautiful spread of homemade Indian food" width="1920" height="1080">
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Trusted by Students
+        </div>
+        <h1 class="hero-title">
+          Homemade<br>
+          <span class="highlight">Goodness,</span><br>
+          Served with Love
+        </h1>
+        <p class="hero-description">
+          Delicious, hygienic, and affordable home-cooked meals crafted with fresh ingredients and
+          served with the warmth of a mother's kitchen. Taste the difference that care makes.
+        </p>
+        <div class="hero-buttons">
+          <a href="#menu" class="btn-primary" id="hero-cta-menu">
+            Explore Our Menu
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#contact" class="btn-secondary" id="hero-cta-contact">
+            Get in Touch
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-icon">🍽️</div>
+          <div class="stat-number" data-target="500" data-suffix="+">0</div>
+          <div class="stat-label">Meals Served Daily</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-number" data-target="4" data-suffix=".9">0</div>
+          <div class="stat-label">Customer Rating</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">👨‍🍳</div>
+          <div class="stat-number" data-target="10" data-suffix="+">0</div>
+          <div class="stat-label">Years of Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">❤️</div>
+          <div class="stat-number" data-target="2000" data-suffix="+">0</div>
+          <div class="stat-label">Happy Students</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator" aria-hidden="true">
+      <div class="mouse"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ============================================
+       ABOUT SECTION
+       ============================================ -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-image-wrapper reveal">
+        <div class="about-image">
+          <img src="images/hero-bg.jpg" alt="Tandra's homemade food spread" width="600" height="400">
+        </div>
+        <div class="about-image-accent"></div>
+        <div class="about-experience-badge">
+          <span class="number">10+</span>
+          <span class="label">Years</span>
+        </div>
+      </div>
+
+      <div class="about-text">
+        <span class="section-label reveal">About Us</span>
+        <h2 class="section-title reveal reveal-delay-1">A Kitchen Filled with Love &amp; Tradition</h2>
+        <p class="reveal reveal-delay-2">
+          At <strong>Tandra's</strong>, we believe that food is more than just sustenance — it's a
+          connection to home. Founded by Tandra Ma'am over a decade ago, our canteen has been the
+          heart of student life, providing wholesome, home-cooked meals that taste just like they
+          were made in your mother's kitchen.
+        </p>
+        <p class="reveal reveal-delay-2">
+          Every dish is prepared fresh each morning using hand-picked ingredients, traditional
+          recipes, and an unwavering commitment to hygiene and quality. Whether it's our aromatic
+          dal, our signature chicken curry, or our beloved biryani — every bite is a warm hug
+          from home.
+        </p>
+
+        <div class="about-features reveal reveal-delay-3">
+          <div class="feature-card">
+            <div class="feature-icon">🌿</div>
+            <h4>Fresh Ingredients</h4>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">✨</div>
+            <h4>Hygienic Kitchen</h4>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💰</div>
+            <h4>Affordable Prices</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       MENU SECTION
+       ============================================ -->
+  <section class="menu" id="menu">
+    <div class="container">
+      <div class="menu-header">
+        <span class="section-label reveal">Our Menu</span>
+        <h2 class="section-title reveal reveal-delay-1">Taste the Homemade Difference</h2>
+        <p class="section-subtitle reveal reveal-delay-2">
+          Explore our carefully curated selection of home-cooked meals, each prepared fresh daily
+          with the finest ingredients and lots of love.
+        </p>
+      </div>
+
+      <div class="menu-filters reveal">
+        <button class="filter-btn active" data-filter="all" id="filter-all">All Items</button>
+        <button class="filter-btn" data-filter="rice" id="filter-rice">Rice & Curry</button>
+        <button class="filter-btn" data-filter="snacks" id="filter-snacks">Snacks</button>
+        <button class="filter-btn" data-filter="specials" id="filter-specials">Specials</button>
+        <button class="filter-btn" data-filter="beverages" id="filter-beverages">Beverages</button>
+      </div>
+
+      <div class="menu-grid">
+        <!-- Card 1: Dal Rice -->
+        <div class="menu-card reveal" data-category="rice" id="menu-dal-rice">
+          <div class="menu-card-image">
+            <img src="images/dal-rice.jpg" alt="Dal Rice" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Popular</span>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Rice & Curry</div>
+            <h3 class="menu-card-title">Dal Rice Combo</h3>
+            <p class="menu-card-desc">Creamy yellow dal tempered with ghee, served with fluffy steamed rice and fresh salad.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹50</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.9
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Chicken Curry -->
+        <div class="menu-card reveal reveal-delay-1" data-category="rice" id="menu-chicken-curry">
+          <div class="menu-card-image">
+            <img src="images/chicken-curry.jpg" alt="Chicken Curry" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Best Seller</span>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Rice & Curry</div>
+            <h3 class="menu-card-title">Chicken Curry Rice</h3>
+            <p class="menu-card-desc">Rich, aromatic chicken curry in a thick masala gravy, paired with fragrant basmati rice.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹80</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.8
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Biryani -->
+        <div class="menu-card reveal reveal-delay-2" data-category="specials" id="menu-biryani">
+          <div class="menu-card-image">
+            <img src="images/biryani.jpg" alt="Chicken Biryani" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Special</span>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Specials</div>
+            <h3 class="menu-card-title">Chicken Biryani</h3>
+            <p class="menu-card-desc">Fragrant layered biryani with tender chicken, saffron rice, fried onions, and raita on the side.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹100</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                5.0
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Samosa -->
+        <div class="menu-card reveal" data-category="snacks" id="menu-samosa">
+          <div class="menu-card-image">
+            <img src="images/samosa.jpg" alt="Samosa" width="400" height="300" loading="lazy">
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Snacks</div>
+            <h3 class="menu-card-title">Samosa (2 Pcs)</h3>
+            <p class="menu-card-desc">Golden crispy samosas stuffed with spiced potatoes and peas, served with mint & tamarind chutney.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹20</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.7
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Paneer Butter Masala -->
+        <div class="menu-card reveal reveal-delay-1" data-category="specials" id="menu-paneer">
+          <div class="menu-card-image">
+            <img src="images/paneer.jpg" alt="Paneer Butter Masala" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Veg Special</span>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Specials</div>
+            <h3 class="menu-card-title">Paneer Butter Masala</h3>
+            <p class="menu-card-desc">Soft paneer cubes in a luscious tomato-butter gravy, served with butter naan or rice.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹90</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.9
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: Egg Roll -->
+        <div class="menu-card reveal reveal-delay-2" data-category="snacks" id="menu-egg-roll">
+          <div class="menu-card-image">
+            <img src="images/chicken-curry.jpg" alt="Egg Roll" width="400" height="300" loading="lazy">
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Snacks</div>
+            <h3 class="menu-card-title">Egg Roll</h3>
+            <p class="menu-card-desc">Flaky paratha wrap filled with spiced egg omelette, onions, green chutney, and fresh veggies.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹30</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.6
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 7: Masala Chai -->
+        <div class="menu-card reveal" data-category="beverages" id="menu-chai">
+          <div class="menu-card-image">
+            <img src="images/dal-rice.jpg" alt="Masala Chai" width="400" height="300" loading="lazy">
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Beverages</div>
+            <h3 class="menu-card-title">Masala Chai</h3>
+            <p class="menu-card-desc">Strong, aromatic Indian tea brewed with ginger, cardamom, and fresh milk. The perfect pick-me-up.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹10</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.9
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 8: Fish Curry Rice -->
+        <div class="menu-card reveal reveal-delay-1" data-category="rice" id="menu-fish-curry">
+          <div class="menu-card-image">
+            <img src="images/biryani.jpg" alt="Fish Curry Rice" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Friday Special</span>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Rice & Curry</div>
+            <h3 class="menu-card-title">Fish Curry Rice</h3>
+            <p class="menu-card-desc">Traditional Bengali-style fish curry with mustard and turmeric, paired with steamed rice.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹90</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.8
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       TESTIMONIALS SECTION
+       ============================================ -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="testimonials-header">
+        <span class="section-label reveal">What Students Say</span>
+        <h2 class="section-title reveal reveal-delay-1">Loved by Hundreds of Students</h2>
+        <p class="section-subtitle reveal reveal-delay-2">
+          Don't just take our word for it — hear from the students who eat with us every day.
+        </p>
+      </div>
+
+      <div class="testimonial-carousel reveal">
+        <div class="testimonial-track" id="testimonial-track">
+
+          <!-- Testimonial 1 -->
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <div class="testimonial-quote-icon">"</div>
+              <p class="testimonial-text">
+                Tandra Ma'am's food is the best thing about our college! The dal rice combo is just
+                like what my mom makes at home. I've been eating here for 3 years and the quality
+                has never dropped. Affordable, delicious, and always served with a smile.
+              </p>
+              <div class="testimonial-stars">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">RK</div>
+                <div>
+                  <div class="testimonial-name">Rahul Kumar</div>
+                  <div class="testimonial-role">B.Tech 3rd Year Student</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <div class="testimonial-quote-icon">"</div>
+              <p class="testimonial-text">
+                As a hostel student far from home, Tandra's canteen has been a lifesaver. The chicken
+                biryani on Fridays is something I look forward to all week! The food is fresh,
+                portions are generous, and the prices are incredibly student-friendly.
+              </p>
+              <div class="testimonial-stars">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">PS</div>
+                <div>
+                  <div class="testimonial-name">Priya Sharma</div>
+                  <div class="testimonial-role">M.Sc 1st Year Student</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <div class="testimonial-quote-icon">"</div>
+              <p class="testimonial-text">
+                The paneer butter masala and fresh roti combo is heavenly! Tandra Ma'am takes great
+                care in preparing each dish, and you can taste the love in every bite. The canteen
+                is always clean and well-maintained. Highly recommend to anyone!
+              </p>
+              <div class="testimonial-stars">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">AD</div>
+                <div>
+                  <div class="testimonial-name">Ankit Das</div>
+                  <div class="testimonial-role">Faculty Member</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 4 -->
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <div class="testimonial-quote-icon">"</div>
+              <p class="testimonial-text">
+                I've tried every food stall near the campus, but nothing comes close to Tandra's.
+                The samosas are the crispiest I've ever had, and the masala chai is the perfect
+                companion for late-night study sessions. It truly feels like eating at home!
+              </p>
+              <div class="testimonial-stars">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">NB</div>
+                <div>
+                  <div class="testimonial-name">Neha Banerjee</div>
+                  <div class="testimonial-role">B.A 2nd Year Student</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="carousel-prev" aria-label="Previous testimonial">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          </button>
+          <div class="carousel-dots">
+            <button class="carousel-dot active" aria-label="Go to slide 1"></button>
+            <button class="carousel-dot" aria-label="Go to slide 2"></button>
+            <button class="carousel-dot" aria-label="Go to slide 3"></button>
+            <button class="carousel-dot" aria-label="Go to slide 4"></button>
+          </div>
+          <button class="carousel-btn" id="carousel-next" aria-label="Next testimonial">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CONTACT SECTION
+       ============================================ -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-left">
+        <div class="contact-header">
+          <span class="section-label reveal">Get In Touch</span>
+          <h2 class="section-title reveal reveal-delay-1">Let's Connect</h2>
+          <p class="section-subtitle reveal reveal-delay-2">
+            Have a question, want to place a bulk order, or interested in collaborating?
+            We'd love to hear from you.
+          </p>
+        </div>
+
+        <div class="contact-info-list reveal">
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📍</div>
+            <div>
+              <div class="contact-info-label">Location</div>
+              <div class="contact-info-value">Near College Campus Gate, Main Road</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">⏰</div>
+            <div>
+              <div class="contact-info-label">Working Hours</div>
+              <div class="contact-info-value">Mon – Sat: 8:00 AM – 8:00 PM</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📞</div>
+            <div>
+              <div class="contact-info-label">Phone</div>
+              <div class="contact-info-value">+91 XXXXX XXXXX</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Collaboration CTA -->
+        <div class="collab-cta reveal">
+          <h3>🤝 Interested in Collaboration?</h3>
+          <p>
+            We're open to partnerships, event catering, and collaborative opportunities.
+            Whether you're an institution, event organizer, or business — let's grow together.
+          </p>
+          <a href="#contact" class="btn-secondary" id="collab-cta-btn">Start a Conversation</a>
+        </div>
+      </div>
+
+      <div class="contact-form-wrapper reveal">
+        <h3>Send Us a Message</h3>
+        <form id="contact-form">
+          <div class="form-group">
+            <label for="form-name">Full Name</label>
+            <input type="text" id="form-name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="form-email">Email Address</label>
+            <input type="email" id="form-email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="form-subject">Subject</label>
+            <input type="text" id="form-subject" placeholder="What's this about?">
+          </div>
+          <div class="form-group">
+            <label for="form-message">Message</label>
+            <textarea id="form-message" placeholder="Tell us what's on your mind..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="form-submit-btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">Tandra's<span>.</span></div>
+          <p>
+            Homemade goodness served with love. Fresh, hygienic, and affordable meals for
+            students and food lovers. Making every meal a taste of home since over a decade.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#testimonials">Reviews</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#menu">Daily Meals</a></li>
+            <li><a href="#menu">Snacks & Beverages</a></li>
+            <li><a href="#contact">Bulk Orders</a></li>
+            <li><a href="#contact">Event Catering</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Hours</h4>
+          <ul>
+            <li><a href="#">Mon – Fri: 8AM – 8PM</a></li>
+            <li><a href="#">Saturday: 9AM – 6PM</a></li>
+            <li><a href="#">Sunday: Closed</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Tandra's. All rights reserved. Made with ❤️</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link" aria-label="Facebook">📘</a>
+          <a href="#" class="footer-social-link" aria-label="Instagram">📸</a>
+          <a href="#" class="footer-social-link" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
