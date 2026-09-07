@@ -168,23 +168,43 @@
 
       <div class="menu-filters reveal">
         <button class="filter-btn active" data-filter="all" id="filter-all">All Items</button>
-        <button class="filter-btn" data-filter="rice" id="filter-rice">Rice & Curry</button>
+        <button class="filter-btn" data-filter="meals" id="filter-meals">Meals & Combos</button>
         <button class="filter-btn" data-filter="snacks" id="filter-snacks">Snacks</button>
         <button class="filter-btn" data-filter="specials" id="filter-specials">Specials</button>
         <button class="filter-btn" data-filter="beverages" id="filter-beverages">Beverages</button>
       </div>
 
       <div class="menu-grid">
-        <!-- Card 1: Dal Rice -->
-        <div class="menu-card reveal" data-category="rice" id="menu-dal-rice">
+        <!-- Card 1: Puri Sabzi Combo -->
+        <div class="menu-card reveal" data-category="meals specials" id="menu-puri-combo">
           <div class="menu-card-image">
-            <img src="images/dal-rice.jpg" alt="Dal Rice" width="400" height="300" loading="lazy">
-            <span class="menu-card-badge">Popular</span>
+            <img src="images/puri-combo.jpg" alt="Puri Sabzi Combo" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Combo Thali</span>
           </div>
           <div class="menu-card-body">
-            <div class="menu-card-category">Rice & Curry</div>
-            <h3 class="menu-card-title">Dal Rice Combo</h3>
-            <p class="menu-card-desc">Creamy yellow dal tempered with ghee, served with fluffy steamed rice and fresh salad.</p>
+            <div class="menu-card-category">Meals & Combos</div>
+            <h3 class="menu-card-title">Puri Sabzi Combo</h3>
+            <p class="menu-card-desc">Crispy golden puris served with homestyle spiced curry, rasgulla sweet, and fresh salad.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹60</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.9
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Steamed Momos -->
+        <div class="menu-card reveal reveal-delay-1" data-category="snacks" id="menu-momos">
+          <div class="menu-card-image">
+            <img src="images/momos.png" alt="Veg Steamed Momos" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Student Favorite</span>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Snacks</div>
+            <h3 class="menu-card-title">Veg Steamed Momos</h3>
+            <p class="menu-card-desc">Handcrafted steamed vegetable dumplings seasoned with herbs, served with fiery red chilli chutney & creamy dip.</p>
             <div class="menu-card-footer">
               <span class="menu-card-price">₹50</span>
               <span class="menu-card-rating">
@@ -195,18 +215,18 @@
           </div>
         </div>
 
-        <!-- Card 2: Chicken Curry -->
-        <div class="menu-card reveal reveal-delay-1" data-category="rice" id="menu-chicken-curry">
+        <!-- Card 3: Multigrain Bread Bun -->
+        <div class="menu-card reveal reveal-delay-2" data-category="snacks" id="menu-multigrain-bread">
           <div class="menu-card-image">
-            <img src="images/chicken-curry.jpg" alt="Chicken Curry" width="400" height="300" loading="lazy">
-            <span class="menu-card-badge">Best Seller</span>
+            <img src="images/multigrain-bread.jpg" alt="Multigrain Cheesy Bun" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Freshly Baked</span>
           </div>
           <div class="menu-card-body">
-            <div class="menu-card-category">Rice & Curry</div>
-            <h3 class="menu-card-title">Chicken Curry Rice</h3>
-            <p class="menu-card-desc">Rich, aromatic chicken curry in a thick masala gravy, paired with fragrant basmati rice.</p>
+            <div class="menu-card-category">Snacks</div>
+            <h3 class="menu-card-title">Multigrain Cheesy Bun</h3>
+            <p class="menu-card-desc">Oven-baked wholesome multigrain bread topped with golden melted cheese, savory herbs, and toasted crust.</p>
             <div class="menu-card-footer">
-              <span class="menu-card-price">₹80</span>
+              <span class="menu-card-price">₹40</span>
               <span class="menu-card-rating">
                 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 4.8
@@ -215,57 +235,18 @@
           </div>
         </div>
 
-        <!-- Card 3: Biryani -->
-        <div class="menu-card reveal reveal-delay-2" data-category="specials" id="menu-biryani">
+        <!-- Card 4: Pav Bhaji -->
+        <div class="menu-card reveal" data-category="meals specials" id="menu-pav-bhaji">
           <div class="menu-card-image">
-            <img src="images/biryani.jpg" alt="Chicken Biryani" width="400" height="300" loading="lazy">
-            <span class="menu-card-badge">Special</span>
+            <img src="images/pav-bhaji.png" alt="Pav Bhaji" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Canteen Favorite</span>
           </div>
           <div class="menu-card-body">
             <div class="menu-card-category">Specials</div>
-            <h3 class="menu-card-title">Chicken Biryani</h3>
-            <p class="menu-card-desc">Fragrant layered biryani with tender chicken, saffron rice, fried onions, and raita on the side.</p>
+            <h3 class="menu-card-title">Pav Bhaji</h3>
+            <p class="menu-card-desc">Rich spiced vegetable mash with dollops of fresh butter, served with buttered grilled pav & crunchy onions.</p>
             <div class="menu-card-footer">
-              <span class="menu-card-price">₹100</span>
-              <span class="menu-card-rating">
-                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                5.0
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 4: Samosa -->
-        <div class="menu-card reveal" data-category="snacks" id="menu-samosa">
-          <div class="menu-card-image">
-            <img src="images/samosa.jpg" alt="Samosa" width="400" height="300" loading="lazy">
-          </div>
-          <div class="menu-card-body">
-            <div class="menu-card-category">Snacks</div>
-            <h3 class="menu-card-title">Samosa (2 Pcs)</h3>
-            <p class="menu-card-desc">Golden crispy samosas stuffed with spiced potatoes and peas, served with mint & tamarind chutney.</p>
-            <div class="menu-card-footer">
-              <span class="menu-card-price">₹20</span>
-              <span class="menu-card-rating">
-                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                4.7
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 5: Paneer Butter Masala -->
-        <div class="menu-card reveal reveal-delay-1" data-category="specials" id="menu-paneer">
-          <div class="menu-card-image">
-            <img src="images/paneer.jpg" alt="Paneer Butter Masala" width="400" height="300" loading="lazy">
-            <span class="menu-card-badge">Veg Special</span>
-          </div>
-          <div class="menu-card-body">
-            <div class="menu-card-category">Specials</div>
-            <h3 class="menu-card-title">Paneer Butter Masala</h3>
-            <p class="menu-card-desc">Soft paneer cubes in a luscious tomato-butter gravy, served with butter naan or rice.</p>
-            <div class="menu-card-footer">
-              <span class="menu-card-price">₹90</span>
+              <span class="menu-card-price">₹70</span>
               <span class="menu-card-rating">
                 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 4.9
@@ -274,29 +255,90 @@
           </div>
         </div>
 
-        <!-- Card 6: Egg Roll -->
-        <div class="menu-card reveal reveal-delay-2" data-category="snacks" id="menu-egg-roll">
+        <!-- Card 5: White Sauce Pasta -->
+        <div class="menu-card reveal reveal-delay-1" data-category="specials" id="menu-white-sauce-pasta">
           <div class="menu-card-image">
-            <img src="images/chicken-curry.jpg" alt="Egg Roll" width="400" height="300" loading="lazy">
+            <img src="images/white-sauce-pasta.jpg" alt="White Sauce Pasta" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Chef's Special</span>
           </div>
           <div class="menu-card-body">
-            <div class="menu-card-category">Snacks</div>
-            <h3 class="menu-card-title">Egg Roll</h3>
-            <p class="menu-card-desc">Flaky paratha wrap filled with spiced egg omelette, onions, green chutney, and fresh veggies.</p>
+            <div class="menu-card-category">Specials</div>
+            <h3 class="menu-card-title">White Sauce Pasta</h3>
+            <p class="menu-card-desc">Penne pasta tossed in velvety rich cream sauce with sweet corn, Italian herbs, and savory seasoning.</p>
             <div class="menu-card-footer">
-              <span class="menu-card-price">₹30</span>
+              <span class="menu-card-price">₹80</span>
               <span class="menu-card-rating">
                 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                4.6
+                4.9
               </span>
             </div>
           </div>
         </div>
 
-        <!-- Card 7: Masala Chai -->
-        <div class="menu-card reveal" data-category="beverages" id="menu-chai">
+        <!-- Card 6: Veg Burger -->
+        <div class="menu-card reveal reveal-delay-2" data-category="snacks" id="menu-veg-burger">
           <div class="menu-card-image">
-            <img src="images/dal-rice.jpg" alt="Masala Chai" width="400" height="300" loading="lazy">
+            <img src="images/veg-burger.png" alt="Veg Burger" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Popular</span>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Snacks</div>
+            <h3 class="menu-card-title">Veg Burger</h3>
+            <p class="menu-card-desc">Crispy golden patty topped with fresh green lettuce, juicy tomato, sliced onions, and house burger spread.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹50</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.8
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 7: Coleslaw Sandwich -->
+        <div class="menu-card reveal" data-category="snacks" id="menu-coleslaw-sandwich">
+          <div class="menu-card-image">
+            <img src="images/coleslaw-sandwich.jpg" alt="Coleslaw Sandwich" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Healthy Choice</span>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Snacks</div>
+            <h3 class="menu-card-title">Coleslaw Sandwich</h3>
+            <p class="menu-card-desc">Crisp grilled brown bread stuffed with creamy vegetable coleslaw, lettuce, and diced tomatoes.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹45</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.7
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 8: Chilli Potatoes -->
+        <div class="menu-card reveal reveal-delay-1" data-category="snacks" id="menu-chilli-potatoes">
+          <div class="menu-card-image">
+            <img src="images/chilli-potatoes.jpg" alt="Chilli Potatoes" width="400" height="300" loading="lazy">
+            <span class="menu-card-badge">Spicy & Tangy</span>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">Snacks</div>
+            <h3 class="menu-card-title">Chilli Potatoes</h3>
+            <p class="menu-card-desc">Crispy fried potato wedges tossed in a sizzling sweet-and-spicy chilli sauce, toasted sesame, and fresh coriander.</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹60</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.8
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 9: Masala Chai -->
+        <div class="menu-card reveal reveal-delay-2" data-category="beverages" id="menu-chai">
+          <div class="menu-card-image">
+            <img src="images/masala-chai-2.jpg" alt="Masala Chai" width="400" height="300" loading="lazy">
           </div>
           <div class="menu-card-body">
             <div class="menu-card-category">Beverages</div>
@@ -307,26 +349,6 @@
               <span class="menu-card-rating">
                 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 4.9
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 8: Fish Curry Rice -->
-        <div class="menu-card reveal reveal-delay-1" data-category="rice" id="menu-fish-curry">
-          <div class="menu-card-image">
-            <img src="images/biryani.jpg" alt="Fish Curry Rice" width="400" height="300" loading="lazy">
-            <span class="menu-card-badge">Friday Special</span>
-          </div>
-          <div class="menu-card-body">
-            <div class="menu-card-category">Rice & Curry</div>
-            <h3 class="menu-card-title">Fish Curry Rice</h3>
-            <p class="menu-card-desc">Traditional Bengali-style fish curry with mustard and turmeric, paired with steamed rice.</p>
-            <div class="menu-card-footer">
-              <span class="menu-card-price">₹90</span>
-              <span class="menu-card-rating">
-                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                4.8
               </span>
             </div>
           </div>
