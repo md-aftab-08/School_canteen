@@ -113,33 +113,105 @@ function initScrollReveal() {
 }
 
 /* ============================================
-   MENU FILTER TABS
+   MENU DYNAMIC RENDERING & FILTER TABS
    ============================================ */
 function initMenuFilters() {
+  const menuGrid = document.getElementById('menu-grid');
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const menuCards = document.querySelectorAll('.menu-card');
 
+  function renderDynamicMenu() {
+    if (!menuGrid || typeof getMenuItems !== 'function') return;
+
+    const items = getMenuItems();
+    const activeFilterBtn = document.querySelector('.filter-btn.active');
+    const currentFilter = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
+
+    menuGrid.innerHTML = items.map(item => {
+      const inStock = item.inStock !== false;
+      const badgeHtml = item.badge ? `<span class="menu-card-badge">${escapeHtml(item.badge)}</span>` : '';
+      const soldOutHtml = !inStock ? `<span class="menu-card-soldout">Sold Out</span>` : '';
+
+      // Format category label
+      let catLabel = item.category || 'Special';
+      if (catLabel.includes('meals')) catLabel = 'Meals & Combos';
+      else if (catLabel.includes('snacks')) catLabel = 'Snacks';
+      else if (catLabel.includes('beverages')) catLabel = 'Beverages';
+      else if (catLabel.includes('specials')) catLabel = 'Specials';
+
+      return `
+        <div class="menu-card ${!inStock ? 'is-soldout' : ''}" data-category="${escapeHtml(item.category || '')}" id="${escapeHtml(item.id)}">
+          <div class="menu-card-image">
+            <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" width="400" height="300" loading="lazy">
+            ${badgeHtml}
+            ${soldOutHtml}
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-category">${escapeHtml(catLabel)}</div>
+            <h3 class="menu-card-title">${escapeHtml(item.title)}</h3>
+            <p class="menu-card-desc">${escapeHtml(item.description || '')}</p>
+            <div class="menu-card-footer">
+              <span class="menu-card-price">₹${item.price}</span>
+              <span class="menu-card-rating">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+                ${item.rating || '4.8'}
+              </span>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    applyFilter(currentFilter);
+  }
+
+  function applyFilter(filter) {
+    const cards = menuGrid.querySelectorAll('.menu-card');
+    cards.forEach(card => {
+      const categories = (card.getAttribute('data-category') || '').split(/\s+/);
+      if (filter === 'all' || categories.includes(filter)) {
+        card.classList.remove('hidden');
+        card.style.animation = 'fadeInUp 0.35s ease forwards';
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+
+  // Filter button clicks
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      // Update active button
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
       const filter = btn.getAttribute('data-filter');
-
-      // Filter cards with animation
-      menuCards.forEach(card => {
-        const categories = (card.getAttribute('data-category') || '').split(/\s+/);
-
-        if (filter === 'all' || categories.includes(filter)) {
-          card.classList.remove('hidden');
-          card.style.animation = 'fadeInUp 0.4s ease forwards';
-        } else {
-          card.classList.add('hidden');
-        }
-      });
+      applyFilter(filter);
     });
   });
+
+  // Initial render
+  renderDynamicMenu();
+
+  // Storage and live custom event sync
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'tandras_menu_items') {
+      renderDynamicMenu();
+    }
+  });
+
+  window.addEventListener('tandras_menu_updated', () => {
+    renderDynamicMenu();
+  });
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
 // Add fadeInUp animation dynamically
@@ -148,7 +220,7 @@ styleSheet.textContent = `
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(16px);
     }
     to {
       opacity: 1;

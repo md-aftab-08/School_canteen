@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tandra's — Canteen Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍛</text></svg>">
+</head>
+<body>
+
+  <!-- ============================================
+       LOGIN SCREEN
+       ============================================ -->
+  <div class="login-wrapper" id="login-screen">
+    <div class="login-card">
+      <div class="login-header">
+        <img src="images/logo.png" alt="Tandra's Logo" class="login-logo">
+        <h2>Canteen Staff Portal</h2>
+        <p>Sign in to manage and update your daily menu</p>
+      </div>
+
+      <form id="login-form" class="login-form">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter username" value="admin" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter password" value="admin123" required autocomplete="current-password">
+        </div>
+
+        <div class="login-hint">
+          <span>💡 Default Login: <strong>admin</strong> / <strong>admin123</strong></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="btn-login">
+          <span>Sign In to Dashboard</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+
+        <div class="login-footer">
+          <a href="index.html" class="back-link">← Return to Public Website</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================
+       ADMIN DASHBOARD (Protected)
+       ============================================ -->
+  <div class="admin-layout" id="admin-dashboard" style="display: none;">
+    <!-- Top Navigation Bar -->
+    <header class="admin-header">
+      <div class="header-left">
+        <a href="index.html" class="brand-link" title="Open Public Website" target="_blank">
+          <img src="images/logo.png" alt="Tandra's Logo" class="admin-logo">
+        </a>
+        <div class="header-title">
+          <h1>Menu Management</h1>
+          <span class="badge-live">● Live Sync Active</span>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <a href="index.html" target="_blank" class="btn btn-outline" id="btn-view-site">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          View Live Website
+        </a>
+
+        <button class="btn btn-outline" id="btn-export-json" title="Download current menu backup">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Export Backup
+        </button>
+
+        <button class="btn btn-outline" id="btn-import-json" title="Restore menu from JSON">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Import
+        </button>
+        <input type="file" id="import-file-input" accept=".json" style="display: none;">
+
+        <button class="btn btn-danger-outline" id="btn-logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="admin-main">
+      <!-- Stats Overview Row -->
+      <section class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-icon">🍽️</div>
+          <div class="stat-info">
+            <span class="stat-val" id="stat-total-items">0</span>
+            <span class="stat-lbl">Total Menu Items</span>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-icon">✅</div>
+          <div class="stat-info">
+            <span class="stat-val" id="stat-instock-items">0</span>
+            <span class="stat-lbl">In Stock & Serving</span>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-info">
+            <span class="stat-val" id="stat-soldout-items">0</span>
+            <span class="stat-lbl">Marked Sold Out</span>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-icon">🏷️</div>
+          <div class="stat-info">
+            <span class="stat-val" id="stat-categories-count">4</span>
+            <span class="stat-lbl">Active Categories</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Action Toolbar -->
+      <section class="toolbar">
+        <div class="toolbar-left">
+          <div class="search-wrapper">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="search-input" placeholder="Search dishes by name or description...">
+          </div>
+
+          <div class="filter-group">
+            <select id="category-filter" class="form-select">
+              <option value="all">All Categories</option>
+              <option value="meals">Meals & Combos</option>
+              <option value="snacks">Snacks</option>
+              <option value="specials">Specials</option>
+              <option value="beverages">Beverages</option>
+            </select>
+
+            <select id="stock-filter" class="form-select">
+              <option value="all">All Availability</option>
+              <option value="instock">In Stock Only</option>
+              <option value="soldout">Sold Out Only</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="toolbar-right">
+          <button class="btn btn-primary" id="btn-add-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add New Dish
+          </button>
+        </div>
+      </section>
+
+      <!-- Menu Items Grid / List -->
+      <section class="items-section">
+        <div class="items-header">
+          <h2>Menu Items (<span id="items-count-display">0</span>)</h2>
+          <div class="items-actions-quick">
+            <button class="btn-text" id="btn-reset-defaults">↺ Reset to Original Menu</button>
+          </div>
+        </div>
+
+        <div class="admin-items-grid" id="admin-items-container">
+          <!-- Populated by admin.js -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+          <div class="empty-icon">🔍</div>
+          <h3>No matching dishes found</h3>
+          <p>Try clearing your search or category filter</p>
+          <button class="btn btn-outline" id="btn-clear-filters">Clear Filters</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ============================================
+       ADD / EDIT ITEM MODAL
+       ============================================ -->
+  <div class="modal-backdrop" id="item-modal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-title">Add New Dish</h3>
+        <button class="modal-close" id="modal-close">&times;</button>
+      </div>
+
+      <form id="item-form" class="modal-body">
+        <input type="hidden" id="edit-item-id">
+
+        <div class="form-row">
+          <div class="form-group flex-2">
+            <label for="item-title">Dish Name *</label>
+            <input type="text" id="item-title" placeholder="e.g. Special Dum Biryani" required>
+          </div>
+
+          <div class="form-group flex-1">
+            <label for="item-price">Price (₹) *</label>
+            <input type="number" id="item-price" placeholder="70" min="0" step="1" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="item-category">Category *</label>
+            <select id="item-category" required class="form-select">
+              <option value="meals">Meals & Combos</option>
+              <option value="snacks">Snacks</option>
+              <option value="specials">Specials</option>
+              <option value="beverages">Beverages</option>
+              <option value="meals specials">Meals & Specials</option>
+            </select>
+          </div>
+
+          <div class="form-group flex-1">
+            <label for="item-badge">Badge / Tag (Optional)</label>
+            <input type="text" id="item-badge" placeholder="e.g. Chef's Special, Popular">
+          </div>
+
+          <div class="form-group flex-1">
+            <label for="item-rating">Rating (1.0 - 5.0)</label>
+            <input type="number" id="item-rating" placeholder="4.9" min="1.0" max="5.0" step="0.1" value="4.8">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="item-desc">Description *</label>
+          <textarea id="item-desc" rows="3" placeholder="Describe the dish ingredients, preparation, and flavors..." required></textarea>
+        </div>
+
+        <!-- Image Selection -->
+        <div class="form-group">
+          <label>Dish Photo *</label>
+          <div class="image-picker-section">
+            <div class="current-image-preview">
+              <img id="image-preview" src="images/puri-combo.jpg" alt="Selected dish photo">
+              <span class="preview-label">Preview</span>
+            </div>
+
+            <div class="image-selection-controls">
+              <label class="sublabel">Pick from Canteen Photo Gallery:</label>
+              <div class="gallery-picker" id="gallery-picker">
+                <!-- Populated by admin.js with available photos -->
+              </div>
+
+              <div class="custom-image-input">
+                <label class="sublabel">Or Enter Custom Image URL / Upload File:</label>
+                <div class="url-input-row">
+                  <input type="text" id="item-image-url" placeholder="images/puri-combo.jpg or https://...">
+                  <label class="btn btn-outline btn-upload" for="file-upload-input">
+                    📁 Browse File
+                  </label>
+                  <input type="file" id="file-upload-input" accept="image/*" style="display: none;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group form-checkbox">
+          <label class="checkbox-label">
+            <input type="checkbox" id="item-instock" checked>
+            <span class="checkmark"></span>
+            <strong>In Stock</strong> (Uncheck to mark as "Sold Out" on the menu)
+          </label>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="modal-save">
+            <span id="save-btn-text">Save Dish</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="menu-data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
