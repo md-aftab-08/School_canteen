@@ -23,16 +23,20 @@
       <form id="login-form" class="login-form">
         <div class="form-group">
           <label for="username">Username</label>
-          <input type="text" id="username" placeholder="Enter username" value="admin" required autocomplete="username">
+          <input type="text" id="username" placeholder="Enter username" required autocomplete="username">
         </div>
 
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter password" value="admin123" required autocomplete="current-password">
-        </div>
-
-        <div class="login-hint">
-          <span>💡 Default Login: <strong>admin</strong> / <strong>admin123</strong></span>
+          <div class="password-input-wrapper">
+            <input type="password" id="password" placeholder="Enter password" required autocomplete="current-password">
+            <button type="button" class="btn-toggle-password" id="toggle-password" aria-label="Toggle password visibility" title="Show/Hide Password">
+              <svg id="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block" id="btn-login">
