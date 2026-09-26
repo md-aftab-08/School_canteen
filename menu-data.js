@@ -174,7 +174,9 @@ const DEFAULT_SITE_SETTINGS = {
   faviconUrl: '',
   ogTitle: "Tandra's — Homemade Goodness, Served with Love",
   ogDescription: "Fresh, hygienic, and affordable homemade meals for students. Explore our delicious menu!",
-  ogImage: ''
+  ogImage: '',
+  heroTitle: "Homemade Goodness, Served with Love",
+  heroDescription: "Delicious, hygienic, and affordable home-cooked meals crafted with fresh ingredients and served with the warmth of a mother's kitchen. Taste the difference that care makes."
 };
 
 const MENU_STORAGE_KEY = 'tandras_menu_items';

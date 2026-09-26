@@ -161,6 +161,41 @@ function initSiteSettings() {
       }
       ogImgMeta.content = settings.ogImage;
     }
+
+    // 5. Visible Homepage Hero Title & Description
+    const heroTitle = settings.heroTitle || settings.ogTitle;
+    if (heroTitle) {
+      const heroTitleEl = document.getElementById('hero-title');
+      if (heroTitleEl) {
+        let displayTitle = heroTitle;
+        if (displayTitle.startsWith("Tandra's — ")) {
+          displayTitle = displayTitle.replace("Tandra's — ", "");
+        } else if (displayTitle.startsWith("Tandra's - ")) {
+          displayTitle = displayTitle.replace("Tandra's - ", "");
+        }
+        
+        const parts = displayTitle.split(',').map(s => s.trim()).filter(Boolean);
+        if (parts.length >= 2) {
+          heroTitleEl.innerHTML = `${escapeHtml(parts[0])}<br><span class="highlight">${escapeHtml(parts[1])}${parts.length > 2 ? ',' : ''}</span>${parts.length > 2 ? '<br>' + escapeHtml(parts.slice(2).join(', ')) : ''}`;
+        } else {
+          const words = displayTitle.split(/\s+/);
+          if (words.length > 3) {
+            const mid = Math.floor(words.length / 2);
+            heroTitleEl.innerHTML = `${escapeHtml(words.slice(0, mid).join(' '))}<br><span class="highlight">${escapeHtml(words.slice(mid).join(' '))}</span>`;
+          } else {
+            heroTitleEl.textContent = displayTitle;
+          }
+        }
+      }
+    }
+
+    const heroDesc = settings.heroDescription || settings.ogDescription;
+    if (heroDesc) {
+      const heroDescEl = document.getElementById('hero-desc');
+      if (heroDescEl) {
+        heroDescEl.textContent = heroDesc;
+      }
+    }
   }
 
   // Initial apply

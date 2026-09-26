@@ -904,6 +904,8 @@ function deleteCategoryById(id) {
 function initSiteSettings() {
   const form = document.getElementById('site-settings-form');
   const btnReset = document.getElementById('btn-reset-settings');
+  const heroTitleInput = document.getElementById('setting-hero-title');
+  const heroDescInput = document.getElementById('setting-hero-desc');
   const faviconInput = document.getElementById('setting-favicon');
   const ogTitleInput = document.getElementById('setting-og-title');
   const ogDescInput = document.getElementById('setting-og-desc');
@@ -950,6 +952,8 @@ function initSiteSettings() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const settings = {
+      heroTitle: heroTitleInput ? heroTitleInput.value.trim() : '',
+      heroDescription: heroDescInput ? heroDescInput.value.trim() : '',
       faviconUrl: faviconInput.value.trim(),
       ogTitle: ogTitleInput.value.trim(),
       ogDescription: ogDescInput.value.trim(),
@@ -972,11 +976,15 @@ function initSiteSettings() {
 function loadSiteSettingsForm() {
   const settings = getSiteSettings();
 
+  const heroTitleInput = document.getElementById('setting-hero-title');
+  const heroDescInput = document.getElementById('setting-hero-desc');
   const faviconInput = document.getElementById('setting-favicon');
   const ogTitleInput = document.getElementById('setting-og-title');
   const ogDescInput = document.getElementById('setting-og-desc');
   const ogImageInput = document.getElementById('setting-og-image');
 
+  if (heroTitleInput) heroTitleInput.value = settings.heroTitle || '';
+  if (heroDescInput) heroDescInput.value = settings.heroDescription || '';
   faviconInput.value = settings.faviconUrl || '';
   ogTitleInput.value = settings.ogTitle || '';
   ogDescInput.value = settings.ogDescription || '';
