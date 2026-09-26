@@ -734,6 +734,11 @@ input, textarea {
   box-shadow: 0 4px 16px rgba(232, 117, 26, 0.3);
 }
 
+.filter-emoji {
+  margin-right: 4px;
+  display: inline-block;
+}
+
 /* Menu grid */
 .menu-grid {
   display: grid;

@@ -157,7 +157,29 @@ const AVAILABLE_GALLERY_IMAGES = [
   { path: 'images/samosa.jpg', label: 'Samosas' }
 ];
 
+/* ============================================
+   DEFAULT CATEGORIES
+   ============================================ */
+const DEFAULT_CATEGORIES = [
+  { id: 'cat-meals', slug: 'meals', label: 'Meals & Combos', emoji: '🍛', color: '#E8751A' },
+  { id: 'cat-snacks', slug: 'snacks', label: 'Snacks', emoji: '🍟', color: '#F59E0B' },
+  { id: 'cat-specials', slug: 'specials', label: 'Specials', emoji: '⭐', color: '#8B5CF6' },
+  { id: 'cat-beverages', slug: 'beverages', label: 'Beverages', emoji: '☕', color: '#10B981' }
+];
+
+/* ============================================
+   DEFAULT SITE SETTINGS
+   ============================================ */
+const DEFAULT_SITE_SETTINGS = {
+  faviconUrl: '',
+  ogTitle: "Tandra's — Homemade Goodness, Served with Love",
+  ogDescription: "Fresh, hygienic, and affordable homemade meals for students. Explore our delicious menu!",
+  ogImage: ''
+};
+
 const MENU_STORAGE_KEY = 'tandras_menu_items';
+const CATEGORIES_STORAGE_KEY = 'tandras_categories';
+const SITE_SETTINGS_STORAGE_KEY = 'tandras_site_settings';
 
 /**
  * Retrieve menu items from localStorage or fallback to default dataset
@@ -197,4 +219,72 @@ function saveMenuItems(items) {
 function resetMenuItems() {
   saveMenuItems(DEFAULT_MENU_ITEMS);
   return DEFAULT_MENU_ITEMS;
+}
+
+/* ============================================
+   CATEGORIES — CRUD via localStorage
+   ============================================ */
+function getCategories() {
+  try {
+    const raw = localStorage.getItem(CATEGORIES_STORAGE_KEY);
+    if (!raw) {
+      saveCategories(DEFAULT_CATEGORIES);
+      return [...DEFAULT_CATEGORIES];
+    }
+    const cats = JSON.parse(raw);
+    return Array.isArray(cats) && cats.length > 0 ? cats : [...DEFAULT_CATEGORIES];
+  } catch (err) {
+    console.error('Failed to read categories from storage:', err);
+    return [...DEFAULT_CATEGORIES];
+  }
+}
+
+function saveCategories(cats) {
+  try {
+    localStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(cats));
+    window.dispatchEvent(new CustomEvent('tandras_categories_updated', { detail: cats }));
+    return true;
+  } catch (err) {
+    console.error('Failed to save categories to storage:', err);
+    return false;
+  }
+}
+
+function resetCategories() {
+  saveCategories(DEFAULT_CATEGORIES);
+  return [...DEFAULT_CATEGORIES];
+}
+
+/* ============================================
+   SITE SETTINGS — Favicon, OG Tags
+   ============================================ */
+function getSiteSettings() {
+  try {
+    const raw = localStorage.getItem(SITE_SETTINGS_STORAGE_KEY);
+    if (!raw) {
+      saveSiteSettings(DEFAULT_SITE_SETTINGS);
+      return { ...DEFAULT_SITE_SETTINGS };
+    }
+    const settings = JSON.parse(raw);
+    return settings && typeof settings === 'object' ? settings : { ...DEFAULT_SITE_SETTINGS };
+  } catch (err) {
+    console.error('Failed to read site settings from storage:', err);
+    return { ...DEFAULT_SITE_SETTINGS };
+  }
+}
+
+function saveSiteSettings(settings) {
+  try {
+    localStorage.setItem(SITE_SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+    window.dispatchEvent(new CustomEvent('tandras_settings_updated', { detail: settings }));
+    return true;
+  } catch (err) {
+    console.error('Failed to save site settings to storage:', err);
+    return false;
+  }
+}
+
+function resetSiteSettings() {
+  saveSiteSettings(DEFAULT_SITE_SETTINGS);
+  return { ...DEFAULT_SITE_SETTINGS };
 }

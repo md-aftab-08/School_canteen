@@ -111,101 +111,321 @@
 
     <!-- Main Container -->
     <main class="admin-main">
-      <!-- Stats Overview Row -->
-      <section class="stats-grid">
-        <div class="stat-box">
-          <div class="stat-icon">🍽️</div>
-          <div class="stat-info">
-            <span class="stat-val" id="stat-total-items">0</span>
-            <span class="stat-lbl">Total Menu Items</span>
-          </div>
-        </div>
+      <!-- Tab Navigation -->
+      <nav class="admin-tabs" id="admin-tabs">
+        <button class="tab-btn active" data-tab="tab-menu-items">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3h18v18H3z"></path>
+            <path d="M3 9h18"></path>
+            <path d="M9 21V9"></path>
+          </svg>
+          Menu Items
+        </button>
+        <button class="tab-btn" data-tab="tab-categories">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+          </svg>
+          Manage Categories
+        </button>
+        <button class="tab-btn" data-tab="tab-site-settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          Site Settings
+        </button>
+      </nav>
 
-        <div class="stat-box">
-          <div class="stat-icon">✅</div>
-          <div class="stat-info">
-            <span class="stat-val" id="stat-instock-items">0</span>
-            <span class="stat-lbl">In Stock & Serving</span>
-          </div>
-        </div>
-
-        <div class="stat-box">
-          <div class="stat-icon">⏳</div>
-          <div class="stat-info">
-            <span class="stat-val" id="stat-soldout-items">0</span>
-            <span class="stat-lbl">Marked Sold Out</span>
-          </div>
-        </div>
-
-        <div class="stat-box">
-          <div class="stat-icon">🏷️</div>
-          <div class="stat-info">
-            <span class="stat-val" id="stat-categories-count">4</span>
-            <span class="stat-lbl">Active Categories</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Action Toolbar -->
-      <section class="toolbar">
-        <div class="toolbar-left">
-          <div class="search-wrapper">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input type="text" id="search-input" placeholder="Search dishes by name or description...">
+      <!-- ========== TAB: Menu Items ========== -->
+      <div class="tab-panel active" id="tab-menu-items">
+        <!-- Stats Overview Row -->
+        <section class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-icon">🍽️</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-total-items">0</span>
+              <span class="stat-lbl">Total Menu Items</span>
+            </div>
           </div>
 
-          <div class="filter-group">
-            <select id="category-filter" class="form-select">
-              <option value="all">All Categories</option>
-              <option value="meals">Meals & Combos</option>
-              <option value="snacks">Snacks</option>
-              <option value="specials">Specials</option>
-              <option value="beverages">Beverages</option>
-            </select>
-
-            <select id="stock-filter" class="form-select">
-              <option value="all">All Availability</option>
-              <option value="instock">In Stock Only</option>
-              <option value="soldout">Sold Out Only</option>
-            </select>
+          <div class="stat-box">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-instock-items">0</span>
+              <span class="stat-lbl">In Stock & Serving</span>
+            </div>
           </div>
-        </div>
 
-        <div class="toolbar-right">
-          <button class="btn btn-primary" id="btn-add-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            Add New Dish
-          </button>
-        </div>
-      </section>
-
-      <!-- Menu Items Grid / List -->
-      <section class="items-section">
-        <div class="items-header">
-          <h2>Menu Items (<span id="items-count-display">0</span>)</h2>
-          <div class="items-actions-quick">
-            <button class="btn-text" id="btn-reset-defaults">↺ Reset to Original Menu</button>
+          <div class="stat-box">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-soldout-items">0</span>
+              <span class="stat-lbl">Marked Sold Out</span>
+            </div>
           </div>
-        </div>
 
-        <div class="admin-items-grid" id="admin-items-container">
-          <!-- Populated by admin.js -->
-        </div>
+          <div class="stat-box">
+            <div class="stat-icon">🏷️</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-categories-count">4</span>
+              <span class="stat-lbl">Active Categories</span>
+            </div>
+          </div>
+        </section>
 
-        <!-- Empty State -->
-        <div class="empty-state" id="empty-state" style="display: none;">
-          <div class="empty-icon">🔍</div>
-          <h3>No matching dishes found</h3>
-          <p>Try clearing your search or category filter</p>
-          <button class="btn btn-outline" id="btn-clear-filters">Clear Filters</button>
-        </div>
-      </section>
+        <!-- Action Toolbar -->
+        <section class="toolbar">
+          <div class="toolbar-left">
+            <div class="search-wrapper">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="search-input" placeholder="Search dishes by name or description...">
+            </div>
+
+            <div class="filter-group">
+              <select id="category-filter" class="form-select">
+                <option value="all">All Categories</option>
+                <!-- Dynamically populated by admin.js -->
+              </select>
+
+              <select id="stock-filter" class="form-select">
+                <option value="all">All Availability</option>
+                <option value="instock">In Stock Only</option>
+                <option value="soldout">Sold Out Only</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="toolbar-right">
+            <button class="btn btn-primary" id="btn-add-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Add New Dish
+            </button>
+          </div>
+        </section>
+
+        <!-- Menu Items Grid / List -->
+        <section class="items-section">
+          <div class="items-header">
+            <h2>Menu Items (<span id="items-count-display">0</span>)</h2>
+            <div class="items-actions-quick">
+              <button class="btn-text" id="btn-reset-defaults">↺ Reset to Original Menu</button>
+            </div>
+          </div>
+
+          <div class="admin-items-grid" id="admin-items-container">
+            <!-- Populated by admin.js -->
+          </div>
+
+          <!-- Empty State -->
+          <div class="empty-state" id="empty-state" style="display: none;">
+            <div class="empty-icon">🔍</div>
+            <h3>No matching dishes found</h3>
+            <p>Try clearing your search or category filter</p>
+            <button class="btn btn-outline" id="btn-clear-filters">Clear Filters</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ========== TAB: Manage Categories ========== -->
+      <div class="tab-panel" id="tab-categories">
+        <section class="settings-panel">
+          <div class="settings-panel-header">
+            <div>
+              <h2>🏷️ Manage Categories</h2>
+              <p class="settings-panel-desc">Create, edit, and organize menu categories. Changes sync live to the public website.</p>
+            </div>
+            <div class="settings-panel-actions">
+              <button class="btn btn-primary" id="btn-add-category">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add Category
+              </button>
+              <button class="btn btn-outline" id="btn-reset-categories">↺ Reset to Defaults</button>
+            </div>
+          </div>
+
+          <div class="categories-table-wrapper">
+            <table class="categories-table" id="categories-table">
+              <thead>
+                <tr>
+                  <th class="th-drag"></th>
+                  <th>Emoji</th>
+                  <th>Label</th>
+                  <th>Slug</th>
+                  <th>Color</th>
+                  <th>Items</th>
+                  <th class="th-actions">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="categories-table-body">
+                <!-- Populated by admin.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="categories-empty" id="categories-empty" style="display: none;">
+            <div class="empty-icon">🏷️</div>
+            <h3>No categories yet</h3>
+            <p>Add your first category to organize the menu</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- ========== TAB: Site Settings ========== -->
+      <div class="tab-panel" id="tab-site-settings">
+        <section class="settings-panel">
+          <div class="settings-panel-header">
+            <div>
+              <h2>⚙️ Site Settings</h2>
+              <p class="settings-panel-desc">Configure your site's branding, favicon, and social sharing (Open Graph) metadata.</p>
+            </div>
+            <div class="settings-panel-actions">
+              <button class="btn btn-outline" id="btn-reset-settings">↺ Reset to Defaults</button>
+            </div>
+          </div>
+
+          <form id="site-settings-form" class="settings-form">
+            <!-- Favicon -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div class="settings-card-icon">🌐</div>
+                <div>
+                  <h3>Favicon</h3>
+                  <p>The small icon shown in browser tabs. Use a URL to a .ico, .png, or .svg image.</p>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-group">
+                  <label for="setting-favicon">Favicon URL</label>
+                  <div class="input-with-preview">
+                    <input type="text" id="setting-favicon" placeholder="e.g. images/favicon.png or https://example.com/icon.png">
+                    <div class="favicon-preview" id="favicon-preview">
+                      <img id="favicon-preview-img" src="" alt="Favicon preview">
+                      <span class="preview-placeholder" id="favicon-placeholder">No favicon set</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- OG Title -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div class="settings-card-icon">📝</div>
+                <div>
+                  <h3>OG Title</h3>
+                  <p>The title shown when your site is shared on social media (WhatsApp, Facebook, Twitter).</p>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-group">
+                  <label for="setting-og-title">Open Graph Title</label>
+                  <input type="text" id="setting-og-title" placeholder="Tandra's — Homemade Goodness, Served with Love" maxlength="120">
+                  <span class="char-count" id="og-title-count">0/120</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- OG Description -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div class="settings-card-icon">📋</div>
+                <div>
+                  <h3>OG Description</h3>
+                  <p>The description shown below the title when shared on social platforms.</p>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-group">
+                  <label for="setting-og-desc">Open Graph Description</label>
+                  <textarea id="setting-og-desc" rows="3" placeholder="Fresh, hygienic, and affordable homemade meals for students. Explore our delicious menu!" maxlength="300"></textarea>
+                  <span class="char-count" id="og-desc-count">0/300</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- OG Image -->
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div class="settings-card-icon">🖼️</div>
+                <div>
+                  <h3>OG Image</h3>
+                  <p>The image shown as a preview when shared on social media. Recommended: 1200×630px.</p>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="form-group">
+                  <label for="setting-og-image">OG Image URL</label>
+                  <div class="input-with-preview og-image-input">
+                    <input type="text" id="setting-og-image" placeholder="e.g. images/og-banner.jpg or https://...">
+                    <label class="btn btn-outline btn-upload" for="og-image-upload">
+                      📁 Browse
+                    </label>
+                    <input type="file" id="og-image-upload" accept="image/*" style="display: none;">
+                  </div>
+                </div>
+                <div class="og-image-preview" id="og-image-preview">
+                  <img id="og-image-preview-img" src="" alt="OG Image preview">
+                  <div class="og-image-placeholder" id="og-image-placeholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    <span>No OG image set — upload or paste a URL above</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social Preview -->
+            <div class="settings-card social-preview-card">
+              <div class="settings-card-header">
+                <div class="settings-card-icon">👁️</div>
+                <div>
+                  <h3>Social Share Preview</h3>
+                  <p>This is how your site will look when shared on social media.</p>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="social-preview" id="social-preview">
+                  <div class="social-preview-image" id="social-preview-img-wrapper">
+                    <img id="social-preview-img" src="" alt="">
+                    <div class="social-preview-img-empty" id="social-preview-img-empty">
+                      <span>No Image</span>
+                    </div>
+                  </div>
+                  <div class="social-preview-text">
+                    <span class="social-preview-domain">yoursite.com</span>
+                    <h4 id="social-preview-title">Tandra's — Homemade Goodness, Served with Love</h4>
+                    <p id="social-preview-desc">Fresh, hygienic, and affordable homemade meals for students.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-form-footer">
+              <button type="submit" class="btn btn-primary btn-lg" id="btn-save-settings">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                  <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                  <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+                Save All Settings
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
     </main>
   </div>
 
@@ -238,11 +458,7 @@
           <div class="form-group flex-1">
             <label for="item-category">Category *</label>
             <select id="item-category" required class="form-select">
-              <option value="meals">Meals & Combos</option>
-              <option value="snacks">Snacks</option>
-              <option value="specials">Specials</option>
-              <option value="beverages">Beverages</option>
-              <option value="meals specials">Meals & Specials</option>
+              <!-- Dynamically populated from categories -->
             </select>
           </div>
 
@@ -309,6 +525,55 @@
     </div>
   </div>
 
+  <!-- ============================================
+       ADD / EDIT CATEGORY MODAL
+       ============================================ -->
+  <div class="modal-backdrop" id="category-modal" style="display: none;">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <h3 id="cat-modal-title">Add New Category</h3>
+        <button class="modal-close" id="cat-modal-close">&times;</button>
+      </div>
+
+      <form id="category-form" class="modal-body">
+        <input type="hidden" id="edit-cat-id">
+
+        <div class="form-row">
+          <div class="form-group flex-2">
+            <label for="cat-label">Category Name *</label>
+            <input type="text" id="cat-label" placeholder="e.g. Desserts" required>
+          </div>
+          <div class="form-group flex-1">
+            <label for="cat-emoji">Emoji *</label>
+            <input type="text" id="cat-emoji" placeholder="🍰" maxlength="4" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="cat-slug">Slug *</label>
+            <input type="text" id="cat-slug" placeholder="desserts" required pattern="[a-z0-9\-]+" title="Only lowercase letters, numbers, and hyphens">
+            <span class="form-hint">Lowercase letters, numbers, hyphens only</span>
+          </div>
+          <div class="form-group flex-1">
+            <label for="cat-color">Brand Color</label>
+            <div class="color-input-wrapper">
+              <input type="color" id="cat-color" value="#E8751A">
+              <span class="color-hex" id="cat-color-hex">#E8751A</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="cat-modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="cat-modal-save">
+            <span id="cat-save-btn-text">Add Category</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toast-container"></div>
 
@@ -317,3 +582,4 @@
   <script src="admin.js"></script>
 </body>
 </html>
+

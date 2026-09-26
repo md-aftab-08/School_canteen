@@ -1,15 +1,20 @@
 /* ============================================
    TANDRA'S — Admin Dashboard Logic
-   Authentication, Menu CRUD, Live Storage Sync
+   Authentication, Menu CRUD, Category Management,
+   Site Settings, Live Storage Sync
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
   initAuth();
+  initTabs();
   initDashboard();
+  initCategoryManager();
+  initSiteSettings();
 });
 
 // Current active session state
 let currentItems = [];
+let currentCategories = [];
 let selectedImage = 'images/puri-combo.jpg';
 
 /* ============================================
@@ -75,12 +80,41 @@ function initAuth() {
     loginScreen.style.display = 'none';
     dashboard.style.display = 'block';
     refreshMenuData();
+    refreshCategoryData();
+    loadSiteSettingsForm();
   }
 
   function showLogin() {
     loginScreen.style.display = 'flex';
     dashboard.style.display = 'none';
   }
+}
+
+/* ============================================
+   TAB NAVIGATION
+   ============================================ */
+function initTabs() {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-tab');
+
+      // Update button states
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Update panels
+      tabPanels.forEach(panel => {
+        if (panel.id === targetId) {
+          panel.classList.add('active');
+        } else {
+          panel.classList.remove('active');
+        }
+      });
+    });
+  });
 }
 
 /* ============================================
@@ -221,7 +255,54 @@ function initDashboard() {
     if (e.key === 'tandras_menu_items') {
       refreshMenuData();
     }
+    if (e.key === 'tandras_categories') {
+      refreshCategoryData();
+    }
   });
+}
+
+/* ============================================
+   CATEGORY FILTER & SELECT POPULATION
+   ============================================ */
+function populateCategoryDropdowns() {
+  const cats = getCategories();
+  
+  // Populate the category filter dropdown
+  const categoryFilter = document.getElementById('category-filter');
+  if (categoryFilter) {
+    const currentVal = categoryFilter.value;
+    categoryFilter.innerHTML = '<option value="all">All Categories</option>';
+    cats.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat.slug;
+      opt.textContent = `${cat.emoji} ${cat.label}`;
+      categoryFilter.appendChild(opt);
+    });
+    categoryFilter.value = currentVal || 'all';
+  }
+
+  // Populate the item modal category select
+  const itemCategorySelect = document.getElementById('item-category');
+  if (itemCategorySelect) {
+    const currentVal = itemCategorySelect.value;
+    itemCategorySelect.innerHTML = '';
+    cats.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat.slug;
+      opt.textContent = `${cat.emoji} ${cat.label}`;
+      itemCategorySelect.appendChild(opt);
+    });
+    // Add combo options for items with multiple categories
+    if (cats.length >= 2) {
+      const comboOpt = document.createElement('option');
+      comboOpt.value = cats.map(c => c.slug).slice(0, 2).join(' ');
+      comboOpt.textContent = `${cats[0].emoji}+${cats[1].emoji} ${cats[0].label} & ${cats[1].label}`;
+      itemCategorySelect.appendChild(comboOpt);
+    }
+    if (currentVal) {
+      itemCategorySelect.value = currentVal;
+    }
+  }
 }
 
 /* ============================================
@@ -229,8 +310,16 @@ function initDashboard() {
    ============================================ */
 function refreshMenuData() {
   currentItems = getMenuItems();
+  currentCategories = getCategories();
+  populateCategoryDropdowns();
   updateStats();
   renderFilteredItems();
+}
+
+function refreshCategoryData() {
+  currentCategories = getCategories();
+  populateCategoryDropdowns();
+  renderCategoriesTable();
 }
 
 function updateStats() {
@@ -249,7 +338,7 @@ function updateStats() {
   document.getElementById('stat-total-items').textContent = total;
   document.getElementById('stat-instock-items').textContent = inStock;
   document.getElementById('stat-soldout-items').textContent = soldOut;
-  document.getElementById('stat-categories-count').textContent = catSet.size;
+  document.getElementById('stat-categories-count').textContent = currentCategories.length;
   document.getElementById('items-count-display').textContent = total;
 }
 
@@ -405,6 +494,9 @@ function openItemModal(id = null) {
   const imageUrlInput = document.getElementById('item-image-url');
   const saveBtnText = document.getElementById('save-btn-text');
 
+  // Refresh categories in modal dropdown
+  populateCategoryDropdowns();
+
   if (id) {
     // Edit Mode
     const item = currentItems.find(i => i.id === id);
@@ -429,7 +521,7 @@ function openItemModal(id = null) {
     editIdInput.value = '';
     titleInput.value = '';
     priceInput.value = '';
-    categorySelect.value = 'meals';
+    categorySelect.value = currentCategories.length > 0 ? currentCategories[0].slug : 'meals';
     badgeInput.value = '';
     ratingInput.value = '4.8';
     descInput.value = '';
@@ -543,6 +635,423 @@ function setImagePreview(src) {
       thumb.classList.remove('selected');
     }
   });
+}
+
+/* ============================================
+   CATEGORY MANAGEMENT
+   ============================================ */
+function initCategoryManager() {
+  const btnAddCategory = document.getElementById('btn-add-category');
+  const btnResetCategories = document.getElementById('btn-reset-categories');
+  const catModal = document.getElementById('category-modal');
+  const catModalClose = document.getElementById('cat-modal-close');
+  const catModalCancel = document.getElementById('cat-modal-cancel');
+  const catForm = document.getElementById('category-form');
+  const catColorInput = document.getElementById('cat-color');
+  const catColorHex = document.getElementById('cat-color-hex');
+  const catLabelInput = document.getElementById('cat-label');
+  const catSlugInput = document.getElementById('cat-slug');
+
+  // Open add category modal
+  btnAddCategory.addEventListener('click', () => {
+    openCategoryModal();
+  });
+
+  // Reset categories
+  btnResetCategories.addEventListener('click', () => {
+    if (confirm('Reset all categories to defaults? Custom categories will be lost.')) {
+      resetCategories();
+      refreshCategoryData();
+      refreshMenuData();
+      showToast('Categories reset to defaults!', 'info');
+    }
+  });
+
+  // Modal close handlers
+  catModalClose.addEventListener('click', closeCategoryModal);
+  catModalCancel.addEventListener('click', closeCategoryModal);
+  catModal.addEventListener('click', (e) => {
+    if (e.target === catModal) closeCategoryModal();
+  });
+
+  // Color picker live preview
+  catColorInput.addEventListener('input', () => {
+    catColorHex.textContent = catColorInput.value.toUpperCase();
+  });
+
+  // Auto-generate slug from label
+  catLabelInput.addEventListener('input', () => {
+    const editId = document.getElementById('edit-cat-id').value;
+    if (!editId) {
+      // Only auto-slug on new categories
+      catSlugInput.value = catLabelInput.value
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+    }
+  });
+
+  // Form submit
+  catForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    saveCategoryForm();
+  });
+
+  // Initial render
+  renderCategoriesTable();
+}
+
+function openCategoryModal(id = null) {
+  const modal = document.getElementById('category-modal');
+  const title = document.getElementById('cat-modal-title');
+  const editIdInput = document.getElementById('edit-cat-id');
+  const labelInput = document.getElementById('cat-label');
+  const emojiInput = document.getElementById('cat-emoji');
+  const slugInput = document.getElementById('cat-slug');
+  const colorInput = document.getElementById('cat-color');
+  const colorHex = document.getElementById('cat-color-hex');
+  const saveBtnText = document.getElementById('cat-save-btn-text');
+
+  if (id) {
+    const cat = currentCategories.find(c => c.id === id);
+    if (!cat) return;
+
+    title.textContent = 'Edit Category';
+    saveBtnText.textContent = 'Save Changes';
+    editIdInput.value = cat.id;
+    labelInput.value = cat.label;
+    emojiInput.value = cat.emoji;
+    slugInput.value = cat.slug;
+    colorInput.value = cat.color || '#E8751A';
+    colorHex.textContent = (cat.color || '#E8751A').toUpperCase();
+  } else {
+    title.textContent = 'Add New Category';
+    saveBtnText.textContent = 'Add Category';
+    editIdInput.value = '';
+    labelInput.value = '';
+    emojiInput.value = '';
+    slugInput.value = '';
+    colorInput.value = '#E8751A';
+    colorHex.textContent = '#E8751A';
+  }
+
+  modal.style.display = 'flex';
+  labelInput.focus();
+}
+
+function closeCategoryModal() {
+  document.getElementById('category-modal').style.display = 'none';
+}
+
+function saveCategoryForm() {
+  const editId = document.getElementById('edit-cat-id').value;
+  const label = document.getElementById('cat-label').value.trim();
+  const emoji = document.getElementById('cat-emoji').value.trim();
+  const slug = document.getElementById('cat-slug').value.trim().toLowerCase();
+  const color = document.getElementById('cat-color').value;
+
+  if (!label || !emoji || !slug) {
+    showToast('Please fill in all required fields', 'error');
+    return;
+  }
+
+  // Validate slug format
+  if (!/^[a-z0-9\-]+$/.test(slug)) {
+    showToast('Slug must contain only lowercase letters, numbers, and hyphens', 'error');
+    return;
+  }
+
+  const cats = getCategories();
+
+  if (editId) {
+    // Update existing
+    const index = cats.findIndex(c => c.id === editId);
+    if (index !== -1) {
+      // Check duplicate slug (excluding current)
+      const duplicate = cats.find(c => c.slug === slug && c.id !== editId);
+      if (duplicate) {
+        showToast(`Slug "${slug}" is already used by "${duplicate.label}"`, 'error');
+        return;
+      }
+      cats[index] = { ...cats[index], label, emoji, slug, color };
+      showToast(`Updated category "${label}"!`, 'success');
+    }
+  } else {
+    // Check duplicate slug
+    if (cats.find(c => c.slug === slug)) {
+      showToast(`A category with slug "${slug}" already exists`, 'error');
+      return;
+    }
+    cats.push({
+      id: `cat-${Date.now()}`,
+      slug,
+      label,
+      emoji,
+      color
+    });
+    showToast(`Added category "${label}"!`, 'success');
+  }
+
+  saveCategories(cats);
+  refreshCategoryData();
+  refreshMenuData();
+  closeCategoryModal();
+}
+
+function renderCategoriesTable() {
+  const tbody = document.getElementById('categories-table-body');
+  const emptyState = document.getElementById('categories-empty');
+  const table = document.getElementById('categories-table');
+  const cats = getCategories();
+
+  if (!cats.length) {
+    table.style.display = 'none';
+    emptyState.style.display = 'block';
+    return;
+  }
+
+  table.style.display = '';
+  emptyState.style.display = 'none';
+
+  // Count items per category
+  const items = getMenuItems();
+  const countMap = {};
+  cats.forEach(c => countMap[c.slug] = 0);
+  items.forEach(item => {
+    (item.category || '').split(/\s+/).forEach(slug => {
+      if (countMap[slug] !== undefined) countMap[slug]++;
+    });
+  });
+
+  tbody.innerHTML = cats.map((cat, idx) => `
+    <tr data-cat-id="${cat.id}">
+      <td class="td-drag">
+        <span class="drag-handle" title="Drag to reorder">⠿</span>
+      </td>
+      <td>
+        <span class="cat-emoji-display">${escapeHtml(cat.emoji)}</span>
+      </td>
+      <td>
+        <span class="cat-label-display">${escapeHtml(cat.label)}</span>
+      </td>
+      <td>
+        <code class="cat-slug-display">${escapeHtml(cat.slug)}</code>
+      </td>
+      <td>
+        <span class="cat-color-swatch" style="background:${escapeHtml(cat.color || '#E8751A')}"></span>
+        <span class="cat-color-text">${escapeHtml(cat.color || '#E8751A')}</span>
+      </td>
+      <td>
+        <span class="cat-item-count">${countMap[cat.slug] || 0}</span>
+      </td>
+      <td class="td-actions">
+        <button class="btn-icon" data-cat-action="edit" data-cat-id="${cat.id}" title="Edit Category">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+        </button>
+        <button class="btn-icon btn-delete" data-cat-action="delete" data-cat-id="${cat.id}" title="Delete Category">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+
+  // Attach events
+  tbody.querySelectorAll('[data-cat-action]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.getAttribute('data-cat-action');
+      const catId = btn.getAttribute('data-cat-id');
+
+      if (action === 'edit') {
+        openCategoryModal(catId);
+      } else if (action === 'delete') {
+        deleteCategoryById(catId);
+      }
+    });
+  });
+}
+
+function deleteCategoryById(id) {
+  const cats = getCategories();
+  const cat = cats.find(c => c.id === id);
+  if (!cat) return;
+
+  // Count items using this category
+  const items = getMenuItems();
+  const count = items.filter(item => (item.category || '').split(/\s+/).includes(cat.slug)).length;
+
+  const warning = count > 0
+    ? `\n\n⚠️ ${count} menu item(s) are using this category. They will keep their category text but it won't appear in filters.`
+    : '';
+
+  if (confirm(`Delete category "${cat.label}"?${warning}`)) {
+    const updated = cats.filter(c => c.id !== id);
+    saveCategories(updated);
+    refreshCategoryData();
+    refreshMenuData();
+    showToast(`Deleted category "${cat.label}"`, 'info');
+  }
+}
+
+/* ============================================
+   SITE SETTINGS (Favicon, OG Tags)
+   ============================================ */
+function initSiteSettings() {
+  const form = document.getElementById('site-settings-form');
+  const btnReset = document.getElementById('btn-reset-settings');
+  const faviconInput = document.getElementById('setting-favicon');
+  const ogTitleInput = document.getElementById('setting-og-title');
+  const ogDescInput = document.getElementById('setting-og-desc');
+  const ogImageInput = document.getElementById('setting-og-image');
+  const ogImageUpload = document.getElementById('og-image-upload');
+
+  // Character counters
+  ogTitleInput.addEventListener('input', () => {
+    document.getElementById('og-title-count').textContent = `${ogTitleInput.value.length}/120`;
+    updateSocialPreview();
+  });
+
+  ogDescInput.addEventListener('input', () => {
+    document.getElementById('og-desc-count').textContent = `${ogDescInput.value.length}/300`;
+    updateSocialPreview();
+  });
+
+  // Favicon live preview
+  faviconInput.addEventListener('input', () => {
+    updateFaviconPreview(faviconInput.value.trim());
+  });
+
+  // OG Image live preview
+  ogImageInput.addEventListener('input', () => {
+    updateOgImagePreview(ogImageInput.value.trim());
+    updateSocialPreview();
+  });
+
+  // OG Image file upload
+  ogImageUpload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        ogImageInput.value = evt.target.result;
+        updateOgImagePreview(evt.target.result);
+        updateSocialPreview();
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Save settings
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const settings = {
+      faviconUrl: faviconInput.value.trim(),
+      ogTitle: ogTitleInput.value.trim(),
+      ogDescription: ogDescInput.value.trim(),
+      ogImage: ogImageInput.value.trim()
+    };
+    saveSiteSettings(settings);
+    showToast('Site settings saved successfully! Changes will apply on the public website.', 'success');
+  });
+
+  // Reset settings
+  btnReset.addEventListener('click', () => {
+    if (confirm('Reset all site settings to defaults?')) {
+      resetSiteSettings();
+      loadSiteSettingsForm();
+      showToast('Site settings reset to defaults!', 'info');
+    }
+  });
+}
+
+function loadSiteSettingsForm() {
+  const settings = getSiteSettings();
+
+  const faviconInput = document.getElementById('setting-favicon');
+  const ogTitleInput = document.getElementById('setting-og-title');
+  const ogDescInput = document.getElementById('setting-og-desc');
+  const ogImageInput = document.getElementById('setting-og-image');
+
+  faviconInput.value = settings.faviconUrl || '';
+  ogTitleInput.value = settings.ogTitle || '';
+  ogDescInput.value = settings.ogDescription || '';
+  ogImageInput.value = settings.ogImage || '';
+
+  // Update counters
+  document.getElementById('og-title-count').textContent = `${(settings.ogTitle || '').length}/120`;
+  document.getElementById('og-desc-count').textContent = `${(settings.ogDescription || '').length}/300`;
+
+  // Update previews
+  updateFaviconPreview(settings.faviconUrl || '');
+  updateOgImagePreview(settings.ogImage || '');
+  updateSocialPreview();
+}
+
+function updateFaviconPreview(url) {
+  const img = document.getElementById('favicon-preview-img');
+  const placeholder = document.getElementById('favicon-placeholder');
+
+  if (url) {
+    img.src = url;
+    img.style.display = 'block';
+    placeholder.style.display = 'none';
+    img.onerror = () => {
+      img.style.display = 'none';
+      placeholder.style.display = 'flex';
+      placeholder.textContent = 'Invalid URL';
+    };
+  } else {
+    img.style.display = 'none';
+    placeholder.style.display = 'flex';
+    placeholder.textContent = 'No favicon set';
+  }
+}
+
+function updateOgImagePreview(url) {
+  const img = document.getElementById('og-image-preview-img');
+  const placeholder = document.getElementById('og-image-placeholder');
+
+  if (url) {
+    img.src = url;
+    img.style.display = 'block';
+    placeholder.style.display = 'none';
+    img.onerror = () => {
+      img.style.display = 'none';
+      placeholder.style.display = 'flex';
+    };
+  } else {
+    img.style.display = 'none';
+    placeholder.style.display = 'flex';
+  }
+}
+
+function updateSocialPreview() {
+  const titleInput = document.getElementById('setting-og-title');
+  const descInput = document.getElementById('setting-og-desc');
+  const imageInput = document.getElementById('setting-og-image');
+
+  const previewTitle = document.getElementById('social-preview-title');
+  const previewDesc = document.getElementById('social-preview-desc');
+  const previewImg = document.getElementById('social-preview-img');
+  const previewImgEmpty = document.getElementById('social-preview-img-empty');
+
+  previewTitle.textContent = titleInput.value || "Tandra's — Homemade Goodness, Served with Love";
+  previewDesc.textContent = descInput.value || 'Fresh, hygienic, and affordable homemade meals for students.';
+
+  const imgUrl = imageInput.value.trim();
+  if (imgUrl) {
+    previewImg.src = imgUrl;
+    previewImg.style.display = 'block';
+    previewImgEmpty.style.display = 'none';
+  } else {
+    previewImg.style.display = 'none';
+    previewImgEmpty.style.display = 'flex';
+  }
 }
 
 /* ============================================

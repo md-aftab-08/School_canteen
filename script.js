@@ -4,6 +4,9 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // -------- Site Settings (Favicon, OG Metadata) --------
+  initSiteSettings();
+
   // -------- Navigation --------
   initNavbar();
   initMobileMenu();
@@ -11,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // -------- Scroll Animations --------
   initScrollReveal();
 
-  // -------- Menu Filters --------
+  // -------- Menu Filters & Categories --------
   initMenuFilters();
 
   // -------- Testimonial Carousel --------
@@ -113,30 +116,125 @@ function initScrollReveal() {
 }
 
 /* ============================================
+   SITE SETTINGS (Favicon, OG Metadata)
+   ============================================ */
+function initSiteSettings() {
+  function applySettings() {
+    if (typeof getSiteSettings !== 'function') return;
+    const settings = getSiteSettings();
+
+    // 1. Favicon
+    if (settings.faviconUrl) {
+      let fav = document.getElementById('site-favicon');
+      if (!fav) {
+        fav = document.querySelector("link[rel*='icon']");
+      }
+      if (fav) {
+        fav.href = settings.faviconUrl;
+      }
+    }
+
+    // 2. Title & OG Title
+    if (settings.ogTitle) {
+      const ogTitleMeta = document.getElementById('og-title-meta') || document.querySelector('meta[property="og:title"]');
+      if (ogTitleMeta) ogTitleMeta.content = settings.ogTitle;
+      const titleTag = document.getElementById('site-title') || document.querySelector('title');
+      if (titleTag) titleTag.textContent = settings.ogTitle;
+    }
+
+    // 3. Description & OG Description
+    if (settings.ogDescription) {
+      const ogDescMeta = document.getElementById('og-desc-meta') || document.querySelector('meta[property="og:description"]');
+      if (ogDescMeta) ogDescMeta.content = settings.ogDescription;
+      const metaDesc = document.getElementById('meta-description') || document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.content = settings.ogDescription;
+    }
+
+    // 4. OG Image
+    if (settings.ogImage) {
+      let ogImgMeta = document.getElementById('og-image-meta') || document.querySelector('meta[property="og:image"]');
+      if (!ogImgMeta) {
+        ogImgMeta = document.createElement('meta');
+        ogImgMeta.setAttribute('property', 'og:image');
+        ogImgMeta.id = 'og-image-meta';
+        document.head.appendChild(ogImgMeta);
+      }
+      ogImgMeta.content = settings.ogImage;
+    }
+  }
+
+  // Initial apply
+  applySettings();
+
+  // Live event listeners
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'tandras_site_settings') {
+      applySettings();
+    }
+  });
+
+  window.addEventListener('tandras_settings_updated', () => {
+    applySettings();
+  });
+}
+
+/* ============================================
    MENU DYNAMIC RENDERING & FILTER TABS
    ============================================ */
 function initMenuFilters() {
   const menuGrid = document.getElementById('menu-grid');
-  const filterBtns = document.querySelectorAll('.filter-btn');
+  const filtersContainer = document.getElementById('menu-filters');
+
+  let currentFilter = 'all';
+
+  function renderCategoryButtons() {
+    if (!filtersContainer || typeof getCategories !== 'function') return;
+
+    const cats = getCategories();
+    filtersContainer.innerHTML = `
+      <button class="filter-btn ${currentFilter === 'all' ? 'active' : ''}" data-filter="all" id="filter-all">All Items</button>
+      ${cats.map(cat => `
+        <button class="filter-btn ${currentFilter === cat.slug ? 'active' : ''}" data-filter="${escapeHtml(cat.slug)}" id="filter-${escapeHtml(cat.slug)}">
+          ${cat.emoji ? `<span class="filter-emoji">${escapeHtml(cat.emoji)}</span> ` : ''}${escapeHtml(cat.label)}
+        </button>
+      `).join('')}
+    `;
+
+    // Reattach listeners to filter buttons
+    filtersContainer.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        filtersContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        applyFilter(currentFilter);
+      });
+    });
+  }
+
+  function getCategoryLabelMap() {
+    const map = {};
+    if (typeof getCategories === 'function') {
+      getCategories().forEach(c => {
+        map[c.slug] = c.label;
+      });
+    }
+    return map;
+  }
 
   function renderDynamicMenu() {
     if (!menuGrid || typeof getMenuItems !== 'function') return;
 
     const items = getMenuItems();
-    const activeFilterBtn = document.querySelector('.filter-btn.active');
-    const currentFilter = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
+    const catMap = getCategoryLabelMap();
 
     menuGrid.innerHTML = items.map(item => {
       const inStock = item.inStock !== false;
       const badgeHtml = item.badge ? `<span class="menu-card-badge">${escapeHtml(item.badge)}</span>` : '';
       const soldOutHtml = !inStock ? `<span class="menu-card-soldout">Sold Out</span>` : '';
 
-      // Format category label
-      let catLabel = item.category || 'Special';
-      if (catLabel.includes('meals')) catLabel = 'Meals & Combos';
-      else if (catLabel.includes('snacks')) catLabel = 'Snacks';
-      else if (catLabel.includes('beverages')) catLabel = 'Beverages';
-      else if (catLabel.includes('specials')) catLabel = 'Specials';
+      // Format category label from categories data
+      const slugs = (item.category || '').split(/\s+/).filter(Boolean);
+      let catLabel = slugs.map(s => catMap[s] || s.charAt(0).toUpperCase() + s.slice(1)).join(' & ') || 'Special';
 
       return `
         <div class="menu-card ${!inStock ? 'is-soldout' : ''}" data-category="${escapeHtml(item.category || '')}" id="${escapeHtml(item.id)}">
@@ -179,17 +277,8 @@ function initMenuFilters() {
     });
   }
 
-  // Filter button clicks
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.getAttribute('data-filter');
-      applyFilter(filter);
-    });
-  });
-
   // Initial render
+  renderCategoryButtons();
   renderDynamicMenu();
 
   // Storage and live custom event sync
@@ -197,9 +286,18 @@ function initMenuFilters() {
     if (e.key === 'tandras_menu_items') {
       renderDynamicMenu();
     }
+    if (e.key === 'tandras_categories') {
+      renderCategoryButtons();
+      renderDynamicMenu();
+    }
   });
 
   window.addEventListener('tandras_menu_updated', () => {
+    renderDynamicMenu();
+  });
+
+  window.addEventListener('tandras_categories_updated', () => {
+    renderCategoryButtons();
     renderDynamicMenu();
   });
 }
